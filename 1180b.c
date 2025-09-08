@@ -24,12 +24,12 @@ int main ()
 
     for (int i = 0; i < *tamanho; i++)
     {
-        if (*end_x < menor)
+        if (*end_x <= menor)
         {
             menor = *end_x;
-            posicao = *tamanho;
+            posicao = i;
         }
-        tamanho++;
+        end_x++;
     }
 
     printf("Menor: %i\n", menor);
