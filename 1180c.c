@@ -1,18 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int acha_Menor(int *v, int *n);
-
 int main()
 {
     int *num = malloc(sizeof(int));
     int *vetor;
+    int posicao = 0;
 
     scanf("%i", num);
 
     vetor = (int *) malloc(*num * sizeof(int));
-
-    int *menor = vetor;
 
     if (vetor == NULL)
     {
@@ -25,15 +22,18 @@ int main()
         scanf("%i", vetor + i);
     }
 
+    int *menor = vetor;
     
     for (int i = 0; i < *num; i++)
     {
         if (*menor > *vetor)
         {
             *menor = *vetor;
+            posicao = i;
         }
         vetor++;
     }
 
-    printf("O menor do vetor: %i", *menor);
+    printf("Menor valor: %i\n", *menor);
+    printf("Posicao: %i", posicao);
 }
