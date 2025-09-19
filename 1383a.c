@@ -1,15 +1,15 @@
 #include <stdio.h>
 
-#define LINHAS 3
-#define COLUNAS 3
+#define LINHAS 9
+#define COLUNAS 9
 
 int main()
 {
     int instancia = 0, k = 0, l = 0, m = 0;  
     
-    int valor_coluna = 0, valor_linha = 0, verifica = 0, erro = 0;
-
     scanf("%i", &instancia);
+
+    int verifica[instancia], verifica_3 = 0;
 
     int matriz[instancia][LINHAS][COLUNAS];
 
@@ -25,32 +25,71 @@ int main()
         k++;
     }
 
-    int ii = 0, jj = 0;
 
     while (m < instancia)
     {
-        for (ii = 0; ii < LINHAS; ii++)
+        int valido = 1;
+
+
+        for (int i = 0; i < LINHAS; i++)
         {
-
-            valor_linha = matriz[m][ii][0];
-
-            for (jj = 1; jj < COLUNAS; jj++)
-            {        
-                valor_coluna = matriz[m][0][jj];        
-                if(valor_linha == matriz[m][ii][jj] || valor_coluna == matriz[m][ii][jj])
+            for (int j = 0; j < COLUNAS; j++)
+            {
+                if (matriz[m][i][j] < 1 || matriz[m][i][j] > 9)
                 {
-                    erro = 1;
+                    valido = 1;
                 }
             }
-            
         }
+        
+        // verificação das LINHAS
+        for (int i = 0; i < LINHAS; i++) {
+            for (int j = 0; j < COLUNAS; j++) {
+                for (int k = j + 1; k < COLUNAS; k++) {
+                    if (matriz[m][i][j] == matriz[m][i][k]) {
+                        valido = 0; // repetição na linha
+                    }
+                }
+            }
+        }
+
+        // verificação das COLUNAS
+        for (int j = 0; j < COLUNAS; j++) {
+            for (int i = 0; i < LINHAS; i++) {
+                for (int k = i + 1; k < LINHAS; k++) {
+                    if (matriz[m][i][j] == matriz[m][k][j]) {
+                        valido = 0; // repetição na coluna
+                    }
+                }
+            }
+        }
+
+        for (int bi = 0; bi < 9; bi += 3) {       // linha inicial do bloco
+            for (int bj = 0; bj < 9; bj += 3) {   // coluna inicial do bloco
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        for (int k = 0; k < 3; k++) {
+                            for (int l = 0; l < 3; l++) {
+                                if (!(i == k && j == l)) {
+                                    if (matriz[m][bi+i][bj+j] == matriz[m][bi+k][bj+l]) {
+                                        valido = 0; // repetição no bloco
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        verifica[m] = valido;
         m++;
     }
 
 
     while (l < instancia) // Exibicao das matrizes
     {
-        for (int i = 0; i < LINHAS; i++)
+        /*for (int i = 0; i < LINHAS; i++)
         {
             for (int j = 0; j < COLUNAS; j++)
             {
@@ -58,19 +97,22 @@ int main()
             }
             printf("\n");
         }
-        printf("\n");
-        l++;
+        printf("\n");*/
 
-        if (erro == 0)
+
+        if (verifica[l] == 0)
         {
-            printf("O sudoku esta correto!\n");
+            printf("Instancia %d\n", l+1);
+            printf("NAO\n\n");
+
         }
         else
         {
-            printf("O sudoku esta errado!\n");
+            printf("Instancia %d\n", l+1);
+            printf("SIM\n\n");
         }
+        l++;
     }
-    
 
     
 }
