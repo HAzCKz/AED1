@@ -33,10 +33,11 @@ int main()
         {
 
             valor_linha = matriz[m][ii][0];
-            
+
             for (jj = 1; jj < COLUNAS; jj++)
-            {                
-                if(valor_linha == matriz[m][ii][jj])
+            {        
+                valor_coluna = matriz[m][0][jj];        
+                if(valor_linha == matriz[m][ii][jj] || valor_coluna == matriz[m][ii][jj])
                 {
                     erro = 1;
                 }
