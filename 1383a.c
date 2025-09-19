@@ -5,11 +5,11 @@
 
 int main()
 {
-    int instancia = 0, k = 0, l = 0, m = 0;  
+    int instancia = 0, k = 0, l = 0, m = 0;
     
     scanf("%i", &instancia);
 
-    int verifica[instancia], verifica_3 = 0;
+    int verifica[instancia];
 
     int matriz[instancia][LINHAS][COLUNAS];
 
@@ -28,8 +28,7 @@ int main()
 
     while (m < instancia)
     {
-        int valido = 1;
-
+        int valido = 1; // inicia a verificao
 
         for (int i = 0; i < LINHAS; i++)
         {
@@ -43,36 +42,52 @@ int main()
         }
         
         // verificação das LINHAS
-        for (int i = 0; i < LINHAS; i++) {
-            for (int j = 0; j < COLUNAS; j++) {
-                for (int k = j + 1; k < COLUNAS; k++) {
-                    if (matriz[m][i][j] == matriz[m][i][k]) {
-                        valido = 0; // repetição na linha
+        for (int i = 0; i < LINHAS; i++) 
+        {
+            for (int j = 0; j < COLUNAS; j++) 
+            {
+                for (int k = j + 1; k < COLUNAS; k++) 
+                {
+                    if (matriz[m][i][j] == matriz[m][i][k]) 
+                    {
+                        valido = 0; 
                     }
                 }
             }
         }
 
         // verificação das COLUNAS
-        for (int j = 0; j < COLUNAS; j++) {
-            for (int i = 0; i < LINHAS; i++) {
-                for (int k = i + 1; k < LINHAS; k++) {
-                    if (matriz[m][i][j] == matriz[m][k][j]) {
-                        valido = 0; // repetição na coluna
+        for (int j = 0; j < COLUNAS; j++) 
+        {
+            for (int i = 0; i < LINHAS; i++) 
+            {
+                for (int k = i + 1; k < LINHAS; k++) 
+                {
+                    if (matriz[m][i][j] == matriz[m][k][j]) 
+                    {
+                        valido = 0; 
                     }
                 }
             }
         }
 
-        for (int bi = 0; bi < 9; bi += 3) {       // linha inicial do bloco
-            for (int bj = 0; bj < 9; bj += 3) {   // coluna inicial do bloco
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 3; j++) {
-                        for (int k = 0; k < 3; k++) {
-                            for (int l = 0; l < 3; l++) {
-                                if (!(i == k && j == l)) {
-                                    if (matriz[m][bi+i][bj+j] == matriz[m][bi+k][bj+l]) {
-                                        valido = 0; // repetição no bloco
+        for (int bi = 0; bi < 9; bi += 3) 
+        {       // linha inicial do bloco
+            for (int bj = 0; bj < 9; bj += 3) 
+            {   // coluna inicial do bloco
+                for (int i = 0; i < 3; i++)
+                 {
+                    for (int j = 0; j < 3; j++) 
+                    {
+                        for (int k = 0; k < 3; k++) 
+                        {
+                            for (int l = 0; l < 3; l++) 
+                            {
+                                if (!(i == k && j == l)) 
+                                {
+                                    if (matriz[m][bi+i][bj+j] == matriz[m][bi+k][bj+l]) 
+                                    {
+                                        valido = 0; 
                                     }
                                 }
                             }
@@ -87,8 +102,20 @@ int main()
     }
 
 
-    while (l < instancia) // Exibicao das matrizes
+    while (l < instancia) // exibicao das matrizes
     {
+        if (verifica[l] == 0)
+        {
+            printf("Instancia %d\n", l+1);
+            printf("NAO\n\n");
+        }
+        else
+        {
+            printf("Instancia %d\n", l+1);
+            printf("SIM\n\n");
+        }
+        l++;
+
         /*for (int i = 0; i < LINHAS; i++)
         {
             for (int j = 0; j < COLUNAS; j++)
@@ -99,20 +126,6 @@ int main()
         }
         printf("\n");*/
 
-
-        if (verifica[l] == 0)
-        {
-            printf("Instancia %d\n", l+1);
-            printf("NAO\n\n");
-
-        }
-        else
-        {
-            printf("Instancia %d\n", l+1);
-            printf("SIM\n\n");
-        }
-        l++;
     }
-
     
 }
