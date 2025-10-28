@@ -4,47 +4,51 @@
 
 int main()
 {
-    int verifica = 0;
+    int g = 1;
 
-    char N[1000];
-
-    fgets(N, sizeof(N), stdin);
-
-    char *str = N;
-
-    printf("A string: %s", N);
-
-    for (int i = 0, len = strlen(N); i <= len; i++)
+    while(g < 10000)
     {
-        if(*str == '(')
-        {
-            verifica++;
-        }
+        char N[10000];
 
-        if(*str == ')')
+        int verifica = 0;
+
+        fgets(N, sizeof(N), stdin);
+
+        char *str = N;
+
+        //printf("A string: %s", N);
+
+        for (int i = 0, len = strlen(N); i <= len; i++)
         {
-            verifica--;
-            if(verifica < 0)
+            if(*str == '(')
             {
-                printf("incorrect");
-                return 1;
+                verifica++;
             }
+
+            if(*str == ')')
+            {
+                verifica--;
+                if(verifica < 0)
+                {
+                    printf("incorrect\n");
+                }
+            }
+
+            str++;
+
         }
 
-        str++;
+        if (verifica != 0)
+        {
+            printf("incorrect\n");
+        }
+        else
+        {
+            printf("correct\n");
+        }
 
+        g++;
     }
-
-
-    if (verifica != 0)
-    {
-        printf("incorrect");
-    }
-    else
-    {
-        printf("correct");
-    }
-    
 
 }
 
