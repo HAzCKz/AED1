@@ -4,21 +4,16 @@
 
 int main()
 {
-    int g = 1;
+    char N[1000];
 
-    while(g < 10000)
+    while(fgets(N, sizeof(N), stdin) != NULL)
     {
-        char N[10000];
 
-        int verifica = 0;
-
-        fgets(N, sizeof(N), stdin);
+        int verifica = 0, j = 0;
 
         char *str = N;
 
-        //printf("A string: %s", N);
-
-        for (int i = 0, len = strlen(N); i <= len; i++)
+        for (; *str != '\0'; str++)
         {
             if(*str == '(')
             {
@@ -30,15 +25,13 @@ int main()
                 verifica--;
                 if(verifica < 0)
                 {
-                    printf("incorrect\n");
+                    j = 1;
                 }
             }
 
-            str++;
-
         }
 
-        if (verifica != 0)
+        if (verifica != 0 || j == 1)
         {
             printf("incorrect\n");
         }
@@ -46,8 +39,6 @@ int main()
         {
             printf("correct\n");
         }
-
-        g++;
     }
 
 }
