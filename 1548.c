@@ -5,10 +5,10 @@ int main()
 {
     int N = 0;
 
-    //scanf("%d", &N);
+    scanf("%d", &N);
 
-    //while (N > 0)
-    //{
+    while (N > 0)
+    {
         int num_alunos = 0;
 
         scanf("%d", &num_alunos);
@@ -39,12 +39,18 @@ int main()
             }
         }
 
+        int var = 0;
+
         for (int i = 0; i < num_alunos; i++)
         {
-            printf("NOtas org: %d\n", notas_org[i]);
+            if(notas_org[i] == notas[i])
+            {
+                var++;
+            }
         }
 
-        //printf("Maior: %d\n", maior);
-        //N--;
-    //}
+        printf("%d\n", var);
+
+        N--;
+    }
 }
