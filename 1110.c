@@ -12,9 +12,9 @@ int main()
 
         int n = entrada;
 
-        for (int i = 1; i <= entrada; i++)
+        for (int i = 0; i <= entrada; i++)
         {
-            v[entrada - i] = n;
+            v[i] = n;
             n--;
         }
 
