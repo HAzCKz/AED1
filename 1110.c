@@ -8,23 +8,49 @@ int main()
 
     while (entrada != 0)
     {
-        int v[entrada];
+        int fila[100];
 
-        int n = entrada;
-
-        for (int i = 0; i <= entrada; i++)
-        {
-            v[i] = n;
-            n--;
-        }
-
+        int t = entrada;
+        
+        int pop[entrada];
 
         for (int i = 0; i < entrada; i++)
         {
-            printf("Entrada: %d\n", v[i]);
+            fila[i] = (entrada - t + 1);
+            t--;
+        }
+
+        int tam = entrada;
+
+        t = entrada; //final da fila
+        
+        int p = 0;
+        int s = 0; //início da fila
+
+        while (tam > 1)
+        {
+            pop[p++] = fila[s];
+            s = s + 1;
+            tam--;
+            fila[t] = fila[s++];
+            t = t + 1;
         }
 
         
+        printf("Discarded cards: ");
+
+        for (int i = 0; i < (entrada - 1); i++)
+        {
+            if (i == entrada - 2)
+            {
+                printf("%d", pop[i]);
+                break;
+
+            }
+            printf("%d, ", pop[i]);
+        }
+
+        printf("\nRemaining card: %d\n", fila[s]);
 
         scanf("%d", &entrada);
     }
