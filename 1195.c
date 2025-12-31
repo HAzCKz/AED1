@@ -1,75 +1,116 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node {
-    int value;
-    struct node *esq, *dir;
-} Node;
+typedef struct no
+{
+    int conteudo;
+    struct no* esq;
+    struct no* dir;
+}no;
 
-Node* Insere(Node* root, int value);
-void PreFixo(Node* root);
-void InFixo(Node* root);
-void PosFixo(Node* root);
+typedef no* arvore;
 
-int main() {
-    int C, N, x, i, j;
+arvore Insere(arvore r, int y);
+
+void Prefixa(arvore r);
+void Infixa(arvore r);
+void Posfixa(arvore r);
+
+
+int main()
+{ 
+    int C = 0;
     scanf("%d", &C);
 
-    for (i = 1; i <= C; i++) {
-        Node* root = NULL;
-        scanf("%d", &N);
+    int caso = 1;
 
-        for (j = 0; j < N; j++) {
-            scanf("%d", &x);
-            root = Insere(root, x);
+    while (C > 0)
+    {
+        arvore raiz = NULL;
+
+        int N = 0; // Número de folhas da árvore 
+
+        scanf("%d", &N);
+    
+        int valores[N];
+
+        for (int i = 0; i < N; i++)
+        {
+            scanf("%d", &valores[i]);
+            raiz = Insere(raiz, valores[i]);
         }
 
-        printf("Case %d:\n", i);
+        
+        printf("Case %d:\n", caso);
+
         printf("Pre.:");
-        PreFixo(root);
+        Prefixa(raiz);
+        
         printf("\nIn..:");
-        InFixo(root);
+        Infixa(raiz);
+        
         printf("\nPost:");
-        PosFixo(root);
+        Posfixa(raiz);
+
         printf("\n\n");
+
+
+
+        C--;
+        caso++;
+
     }
 
-    return 0;
+
 }
 
-Node* Insere(Node* root, int value) {
-    if (root == NULL) {
-        root = (Node*)malloc(sizeof(Node));
-        root->value = value;
-        root->esq = root->dir = NULL;
-    } else if (value < root->value) {
-        root->esq = Insere(root->esq, value);
-    } else {
-        root->dir = Insere(root->dir, value);
+arvore Insere(arvore r, int y)
+{
+    if (r == NULL)
+    {
+        r = malloc(sizeof(arvore));
+        r->conteudo = y;
+        r->dir = r->esq = NULL;
     }
-    return root;
+    else if (y < r->conteudo)
+    {
+        r->esq = Insere(r->esq, y);
+    }
+    else
+    {
+        r->dir = Insere(r->dir, y);
+    }
+    
+    return r;
 }
 
-void PreFixo(Node* root) {
-    if (root) {
-        printf(" %d", root->value);
-        PreFixo(root->esq);
-        PreFixo(root->dir);
+
+void Prefixa(arvore r) //r-e-d
+{
+    if (r != NULL)
+    {
+        printf(" %d", r->conteudo);
+        Prefixa(r->esq);
+        Prefixa(r->dir);
     }
 }
 
-void InFixo(Node* root) {
-    if (root) {
-        InFixo(root->esq);
-        printf(" %d", root->value);
-        InFixo(root->dir);
+void Infixa(arvore r) //e-r-d
+{
+    if (r != NULL)
+    {
+        Infixa(r->esq);
+        printf(" %d", r->conteudo);
+        Infixa(r->dir);
     }
 }
 
-void PosFixo(Node* root) {
-    if (root) {
-        PosFixo(root->esq);
-        PosFixo(root->dir);
-        printf(" %d", root->value);
+void Posfixa (arvore r) // e-d-r
+{
+    if (r != NULL)
+    {
+        Posfixa(r->esq);
+        Posfixa(r->dir);
+        printf(" %d", r->conteudo);
     }
 }
