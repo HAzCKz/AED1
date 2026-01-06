@@ -11,9 +11,7 @@ int main()
 
         int verifica = 0, j = 0;
 
-        char *str = N;
-
-        for (; *str != '\0'; str++)
+        for (char *str = N; *str != '\0'; str++)
         {
             if(*str == '(')
             {
@@ -42,4 +40,3 @@ int main()
     }
 
 }
-

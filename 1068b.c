@@ -19,7 +19,7 @@ int main()
 
         int erro = 0;
 
-        for (int i = 0; N[i] != '\0' && N[i] != '\n'; i++)
+        for (int i = 0; N[i] != '\0'; i++)
         {
             if (N[i] == '(')
             {
@@ -50,8 +50,6 @@ int main()
 
         free(pilha);
     }
-
-    return 0;
 }
 
 No* empilhar(No *topo)

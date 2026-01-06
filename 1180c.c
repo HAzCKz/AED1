@@ -35,5 +35,5 @@ int main()
     }
 
     printf("Menor valor: %i\n", *menor);
-    printf("Posicao: %i", posicao);
+    printf("Posicao: %i\n", posicao);
 }

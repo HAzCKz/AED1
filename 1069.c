@@ -31,6 +31,4 @@ int main()
         printf("%d\n", total);
         N--;
     }
-
-    return 0;
 }

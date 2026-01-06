@@ -35,3 +35,4 @@
         printf("Menor valor: %i\n", menor);
         printf("Posicao: %i\n", posicao);
     }
+    

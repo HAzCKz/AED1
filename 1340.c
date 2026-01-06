@@ -1,106 +1,113 @@
 #include <stdio.h>
 #include <stdlib.h>
+    
+int main()
+{
+    int n = 0;
 
-void resolver() {
-    int n;
-    while (scanf("%d", &n) != EOF) {
-        // Estruturas de dados (vetores simples)
-        int pilha[1005], topo_pilha = 0;
-        int fila[1005], frente_fila = 0, tras_fila = 0;
+    while (scanf("%d", &n) != EOF)
+    {
+        int pilha[1005], topo = 0;
+
+        int fila[1005], frente = 0, tras = 0;
+
         int pq[1005], tam_pq = 0;
 
-        // Flags para identificar as estruturas
         int eh_pilha = 1;
         int eh_fila = 1;
         int eh_pq = 1;
 
-        int i;
-        for (i = 0; i < n; i = i + 1) {
+
+        for (int i = 0; i < n; i++)
+        {
             int comando, x;
-            scanf("%d %d", &comando, &x);
 
-            if (comando == 1) {
-                // Inserir na Pilha
-                pilha[topo_pilha] = x;
-                topo_pilha = topo_pilha + 1;
+            scanf("%d", &comando);
+            scanf("%d", &x);
 
-                // Inserir na Fila
-                fila[tras_fila] = x;
-                tras_fila = tras_fila + 1;
+            if (comando == 1) 
+            {
+                pilha[topo] = x;
+                topo++;
 
-                // Inserir na Priority Queue
+                fila[tras] = x;
+                tras++;
+
                 pq[tam_pq] = x;
-                tam_pq = tam_pq + 1;
+                tam_pq++;
             } 
-            else if (comando == 2) {
-                // Testar Pilha (LIFO)
-                if (topo_pilha == 0) {
+
+            else if (comando == 2)
+            {
+                //Teste da Pilha
+                int elementop = pilha[topo - 1];
+
+                topo = topo - 1;
+
+                if (elementop != x)
+                {
                     eh_pilha = 0;
-                } else {
-                    int elemento = pilha[topo_pilha - 1];
-                    topo_pilha = topo_pilha - 1;
-                    if (elemento != x) {
-                        eh_pilha = 0;
-                    }
                 }
 
-                // Testar Fila (FIFO)
-                if (frente_fila == tras_fila) {
+                //Teste da Fila
+                int elementof = fila[frente];
+
+                frente = frente + 1;
+
+                if (elementof != x)
+                {
                     eh_fila = 0;
-                } else {
-                    int elemento = fila[frente_fila];
-                    frente_fila = frente_fila + 1;
-                    if (elemento != x) {
-                        eh_fila = 0;
+                }
+                
+                // Teste da Fila de Prio.
+                int indice_maior = 0;
+
+                for (int j = 1; j < tam_pq; j++)
+                {
+                    if (pq[j] > pq[indice_maior])
+                    {
+                        indice_maior = j;
                     }
                 }
 
-                // Testar Priority Queue (Maior sai primeiro)
-                if (tam_pq == 0) {
+                int elemento_maior = pq[indice_maior];
+
+                for (int j = indice_maior; j < tam_pq - 1; j++)
+                {
+                    pq[j] = pq[j + 1];
+                }
+                tam_pq = tam_pq - 1;
+
+                if (elemento_maior != x)
+                {
                     eh_pq = 0;
-                } else {
-                    // Busca o índice do maior elemento
-                    int indice_maior = 0;
-                    int j;
-                    for (j = 1; j < tam_pq; j = j + 1) {
-                        if (pq[j] > pq[indice_maior]) {
-                            indice_maior = j;
-                        }
-                    }
-                    
-                    int elemento_maior = pq[indice_maior];
-                    
-                    // Remove o elemento "puxando" os outros para cobrir o buraco
-                    for (j = indice_maior; j < tam_pq - 1; j = j + 1) {
-                        pq[j] = pq[j + 1];
-                    }
-                    tam_pq = tam_pq - 1;
-
-                    if (elemento_maior != x) {
-                        eh_pq = 0;
-                    }
                 }
+                
             }
         }
 
-        // Avaliação dos resultados
+
         int total = eh_pilha + eh_fila + eh_pq;
 
-        if (total == 0) {
+        if (total == 0)
+        {
             printf("impossible\n");
-        } else if (total > 1) {
+        }
+        else if (total > 1)
+        {
             printf("not sure\n");
-        } else if (eh_pilha == 1) {
+        }
+        else if (eh_pilha == 1)
+        {
             printf("stack\n");
-        } else if (eh_fila == 1) {
+        }
+        else if (eh_fila == 1)
+        {
             printf("queue\n");
-        } else if (eh_pq == 1) {
+        }
+        else if (eh_pq == 1)
+        {
             printf("priority queue\n");
         }
     }
-}
-
-int main() {
-    resolver();
-    return 0;
 }
