@@ -9,9 +9,8 @@ typedef struct celula
 
 void Insere_Num (celula *p, int num);
 void Printa (celula *lst);
-void Inverte_lista (celula *lst);
+void Inverte_lista(celula *lst);
 void BuscaRemove_Celula(celula *lst, int num);
-
 
 
 int main()
@@ -48,7 +47,6 @@ int main()
 
     printf("\n");
 
-
 }
 
 void Insere_Num (celula *p, int num)
@@ -65,13 +63,13 @@ void BuscaRemove_Celula(celula *lst, int num)
     p = lst;
     q = lst->seg;
 
-    while (q!=NULL && q->conteudo != num)
+    while (q != NULL && q->conteudo != num)
     {
         p = q;
         q = q->seg;
     }
 
-    if (q!=NULL)
+    if (q != NULL)
     {
         p->seg = q->seg;
         free(q);
@@ -83,11 +81,10 @@ void Printa (celula *lst)
 {
     celula *p = lst->seg;
 
-    if (p == NULL) {
-        printf("\n");
+    if (p == NULL)
+    {
         return;
     }
-
 
     printf("%d", p->conteudo);
     p = p->seg;
@@ -97,8 +94,6 @@ void Printa (celula *lst)
         printf(" %d", p->conteudo);
         p = p->seg;
     }
-
-    printf("\n");
 }
 
 

@@ -26,9 +26,9 @@ int main()
             notas_org[i] = notas[i];
         }
 
-        for (int i = 0; i < num_alunos-1; i++)
+        for (int i = 0; i < (num_alunos-1); i++)
         {
-            for (int j = 0; j < num_alunos-i-1; j++) 
+            for (int j = 0; j < (num_alunos-i-1); j++) 
             {
                 if (notas_org[j] < notas_org[j+1]) 
                 {

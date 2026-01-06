@@ -54,13 +54,10 @@ int main()
 
         printf("\n\n");
 
-
-
         C--;
         caso++;
 
     }
-
 
 }
 

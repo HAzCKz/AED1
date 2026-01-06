@@ -2,116 +2,172 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct Node {
+typedef struct No
+{
     char conteudo;
-    struct Node *esq;
-    struct Node *dir;
-} Node;
+    struct No *esq;
+    struct No *dir;
+} No;
 
-Node* CriaNode(char conteudo) {
-    Node* nova = (Node*)malloc(sizeof(Node));
-    nova->conteudo = conteudo;
-    nova->esq = NULL;
-    nova->dir = NULL;
-    return nova;
-}
-
-Node* Insere(Node* root, char conteudo) {
-    if (root == NULL) {
-        return CriaNode(conteudo);
-    }
-    
-    if (conteudo < root->conteudo) {
-        root->esq = Insere(root->esq, conteudo);
-    } else if (conteudo > root->conteudo) {
-        root->dir = Insere(root->dir, conteudo);
-    }
-    
-    return root;
-}
+No* Insere(No* p, char ele);
+int search(No* p, char ele);
+void InFixa(No* p, int *primeiro_ele);
+void PreFixa(No* p, int *primeiro_ele);
+void PosFixa(No* p, int *primeiro_ele);
 
 
-int search(Node* root, char conteudo) {
-    if (root == NULL) return 0;
-    if (root->conteudo == conteudo) return 1;
-    
-    if (conteudo < root->conteudo) {
-        return search(root->esq, conteudo);
-    } else {
-        return search(root->dir, conteudo);
-    }
-}
+int main()
+{
+    No* raiz = NULL;
 
-
-void InFixa(Node* root, int *first) {
-    if (root == NULL) return;
+    char comando[20];
+    char elemento;
+    int primeiro_ele;
     
-    InFixa(root->esq, first);
-    
-    if (!(*first)) printf(" ");
-    printf("%c", root->conteudo);
-    *first = 0; 
-    
-    InFixa(root->dir, first);
-}
-
-void PreFixa(Node* root, int *first) {
-    if (root == NULL) return;
-    
-    if (!(*first)) printf(" ");
-    printf("%c", root->conteudo);
-    *first = 0;
-    
-    PreFixa(root->esq, first);
-    PreFixa(root->dir, first);
-}
-
-void postOrder(Node* root, int *first) {
-    if (root == NULL) return;
-    
-    postOrder(root->esq, first);
-    postOrder(root->dir, first);
-    
-    if (!(*first)) printf(" ");
-    printf("%c", root->conteudo);
-    *first = 0;
-}
-
-int main() {
-    Node* root = NULL;
-    char command[20];
-    char letter;
-    
-    while (scanf("%s", command) != EOF) {
+    while (scanf("%s", comando) != EOF)
+    {
+        if (strcmp(comando, "I") == 0)
+        {
+            scanf(" %c", &elemento); 
+            raiz = Insere(raiz, elemento);
+            
+        }
         
-        if (strcmp(command, "I") == 0) {
-            scanf(" %c", &letter); 
-            root = Insere(root, letter);
-            
-        } else if (strcmp(command, "INFIXA") == 0) {
-            int first = 1; 
-            InFixa(root, &first);
+        else if (strcmp(comando, "INFIXA") == 0)
+        {
+            int primeiro_ele = 1; 
+            InFixa(raiz, &primeiro_ele);
             printf("\n");
             
-        } else if (strcmp(command, "PREFIXA") == 0) {
-            int first = 1;
-            PreFixa(root, &first);
+        }
+        
+        else if (strcmp(comando, "PREFIXA") == 0)
+        {
+            int primeiro_ele = 1;
+            PreFixa(raiz, &primeiro_ele);
             printf("\n");
             
-        } else if (strcmp(command, "POSFIXA") == 0) {
-            int first = 1;
-            postOrder(root, &first);
+        }
+        
+        else if (strcmp(comando, "POSFIXA") == 0)
+        {
+            int primeiro_ele = 1;
+            PosFixa(raiz, &primeiro_ele);
             printf("\n");
             
-        } else if (strcmp(command, "P") == 0) {
-            scanf(" %c", &letter);
-            if (search(root, letter)) {
-                printf("%c existe\n", letter);
-            } else {
-                printf("%c nao existe\n", letter);
+        }
+
+        else if (strcmp(comando, "P") == 0)
+        {
+            scanf(" %c", &elemento);
+            if (search(raiz, elemento) == 1)
+            {
+                printf("%c existe\n", elemento);
+            }
+            else
+            {
+                printf("%c nao existe\n", elemento);
             }
         }
     }
+}
+
+
+No* Insere(No* p, char y)
+{
+    if (p == NULL)
+    {
+        No* nova = malloc(sizeof(No));
+        nova->conteudo = y;
+        nova->esq = NULL;
+        nova->dir = NULL;
+        return nova;
+    }
     
-    return 0;
+    if (y < p->conteudo)
+    {
+        p->esq = Insere(p->esq, y);
+    }
+    
+    else if (y > p->conteudo)
+    {
+        p->dir = Insere(p->dir, y);
+    }
+    
+    return p;
+}
+
+int search(No* p, char y)
+{
+    if (p == NULL)
+    {
+        return 0;
+    }
+    
+    if (p->conteudo == y)
+    {
+        return 1;
+    }
+
+    if (y < p->conteudo)
+    {
+        return search(p->esq, y);
+    }
+    
+    else
+    {
+        return search(p->dir, y);
+    }
+}
+
+void InFixa(No* p, int *primeiro_ele)
+{
+    if (p != NULL)
+    {
+        InFixa(p->esq, primeiro_ele);
+        
+        if ((*primeiro_ele) == 0)
+        {
+            printf(" ");
+        } 
+        printf("%c", p->conteudo);
+        *primeiro_ele = 0; 
+        
+        InFixa(p->dir, primeiro_ele);
+    }
+}
+
+void PreFixa(No* p, int *primeiro_ele)
+{
+    if (p == NULL) return;
+    
+    if ((*primeiro_ele) == 0)
+    {
+        printf(" ");
+    } 
+
+    printf("%c", p->conteudo);
+
+    *primeiro_ele = 0;
+    
+    PreFixa(p->esq, primeiro_ele);
+    PreFixa(p->dir, primeiro_ele);
+}
+
+void PosFixa(No* p, int *primeiro_ele)
+{
+    if (p != NULL)
+    {
+        PosFixa(p->esq, primeiro_ele);
+        PosFixa(p->dir, primeiro_ele);
+        
+        if ((*primeiro_ele) == 0)
+        {
+            printf(" ");
+        }
+
+        printf("%c", p->conteudo);
+
+        *primeiro_ele = 0;
+    }
 }
