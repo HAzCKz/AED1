@@ -1,36 +1,46 @@
 #include <stdio.h>
 
-int main() {
+int main()
+{
     int NC;
     scanf("%d", &NC);
 
-    for (int c = 0; c < NC; c++) {
+    for (int i = 0; i < NC; i++)
+    {
         int N;
         scanf("%d", &N);
         int alturas[N];
 
-        for (int i = 0; i < N; i++) {
-            scanf("%d", &alturas[i]);
+        for (int ii = 0; ii < N; ii++)
+        {
+            scanf("%d", &alturas[ii]);
         }
 
-        // Insertion Sort diretamente no main
-        for (int i = 1; i < N; i++) {
-            int key = alturas[i];
-            int j = i - 1;
-            while (j >= 0 && alturas[j] > key) {
+        // Insertion Sort
+        for (int iii = 1; iii < N; iii++)
+        {
+            int chave = alturas[iii];
+            int j = iii - 1;
+            
+            while (j >= 0 && alturas[j] > chave)
+            {
                 alturas[j + 1] = alturas[j];
                 j--;
             }
-            alturas[j + 1] = key;
+
+            alturas[j + 1] = chave;
         }
 
-        // Impressão
-        for (int i = 0; i < N; i++) {
-            if (i != 0) printf(" ");
-            printf("%d", alturas[i]);
+        for (int p = 0; p < N; p++)
+        {
+            if (p != 0)
+            {
+                printf(" ");
+            }
+
+            printf("%d", alturas[p]);
         }
         printf("\n");
     }
 
-    return 0;
 }
