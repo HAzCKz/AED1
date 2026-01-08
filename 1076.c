@@ -1,49 +1,65 @@
 #include <stdio.h>
 
-//#define 1000 1000
-
 void dfs(int u);
 
-int g[1000][1000];
-int used[1000];
-int n, count;
+int MATRIZ[100][100];
+int VETOR[100];
+int vertices, res;
 
-int main() {
-
-    int t;
+int main()
+{
+    int t = 0;
     scanf("%d", &t);
 
-    while (t--) {
-        int start, m, a, b;
-        scanf("%d %d %d", &start, &n, &m);
+    while (t > 0)
+    {
+        int primeiro = 0, aresta = 0, a = 0, b = 0;
 
-        for (int i = 0; i < n; i++) {
-            used[i] = 0;
-            for (int j = 0; j < n; j++)
-                g[i][j] = 0;
+        scanf("%d", &primeiro);
+        scanf("%d", &vertices);
+        scanf("%d", &aresta);
+
+
+        for (int i = 0; i < vertices; i++)
+        {
+            VETOR[i] = 0;
+
+            for (int j = 0; j < vertices; j++)
+            {
+                MATRIZ[i][j] = 0;
+            }
         }
 
-        for (int i = 0; i < m; i++) {
-            scanf("%d %d", &a, &b);
-            g[a][b] = g[b][a] = 1;
+        for (int i = 0; i < aresta; i++)
+        {
+            scanf("%d", &a);
+            scanf("%d", &b);
+
+            MATRIZ[a][b] = MATRIZ[b][a] = 1;
         }
 
-        count = 0;
-        dfs(start);
+        res = 0;
 
-        printf("%d\n", count);
+        dfs(primeiro);
+
+        printf("%d\n", res);
+
+        t--;
     }
 
-    return 0;
 }
 
-void dfs(int u) {
-    used[u] = 1;
-    for (int v = 0; v < n; v++) {
-        if (g[u][v] && !used[v]) {
-            count++;    // ida
+void dfs(int u)
+{
+    VETOR[u] = 1;
+
+    for (int v = 0; v < vertices; v++)
+    {
+        if (MATRIZ[u][v] && VETOR[v] == 0)
+        {
+            res++;    // ida
             dfs(v);
-            count++;    // volta
+            res++;    // volta
         }
     }
 }
