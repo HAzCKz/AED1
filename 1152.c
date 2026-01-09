@@ -1,40 +1,36 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct {
+typedef struct Edge{
     int u, v;
     int w;
 } Edge;
 
-int cmp(const void *a, const void *b) {
-    Edge *ea = (Edge*)a;
-    Edge *eb = (Edge*)b;
-    return ea->w - eb->w;
-}
+int cmp(const void *a, const void *b);
+int find(int x);
+void unite(int x, int y);
 
-// Union-Find
 int parent[200000];
-int find(int x) {
-    if (parent[x] != x) parent[x] = find(parent[x]);
-    return parent[x];
-}
 
-void unite(int x, int y) {
-    x = find(x);
-    y = find(y);
-    if (x != y) parent[y] = x;
-}
-
-int main() {
-    while (1) {
+int main()
+{
+    while (1)
+    {
         int m, n;
-        scanf("%d %d", &m, &n);
-        if (m == 0 && n == 0) break;
 
-        Edge *edges = (Edge*)malloc(n * sizeof(Edge));
+        scanf("%d %d", &m, &n);
+
+        if (m == 0 && n == 0)
+        {
+            break;
+        }
+
+        Edge *edges = malloc(n * sizeof(Edge));
+        
         long long total = 0;
 
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
+        {
             int x, y, z;
             scanf("%d %d %d", &x, &y, &z);
             edges[i].u = x;
@@ -62,4 +58,22 @@ int main() {
         free(edges);
     }
     return 0;
+}
+
+int cmp(const void *a, const void *b) {
+    Edge *ea = (Edge*)a;
+    Edge *eb = (Edge*)b;
+    return ea->w - eb->w;
+}
+
+// Union-Find
+int find(int x) {
+    if (parent[x] != x) parent[x] = find(parent[x]);
+    return parent[x];
+}
+
+void unite(int x, int y) {
+    x = find(x);
+    y = find(y);
+    if (x != y) parent[y] = x;
 }
