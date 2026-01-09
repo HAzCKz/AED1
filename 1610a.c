@@ -1,18 +1,11 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-typedef struct No
-{
-    int v;
-    struct No* proximo;
-}No;
-
-No* LISTA[10001];
+char MATRIZ[10001][10001];
 int VETOR[10001];
 int ciclo;
 
-void dfs(int u);
+void dfs(int u, int n);
 
 int main()
 {
@@ -30,7 +23,11 @@ int main()
         for (int i = 0; i <= n; i++)
         {
             VETOR[i] = 0;
-            LISTA[i] = NULL;
+
+            for (int j = 0; j <= n; j++)
+            {
+                MATRIZ[i][j] = 0;
+            }
         }
 
         for (int i = 0; i < m; i++)
@@ -39,10 +36,7 @@ int main()
             scanf("%d", &a);
             scanf("%d", &b);
 
-            No* novo = malloc(sizeof(No));
-            novo->v = b;
-            novo->proximo = LISTA[a];
-            LISTA[a] = novo;
+            MATRIZ[a][b] = 1; 
         }
 
         ciclo = 0;
@@ -51,7 +45,7 @@ int main()
         {
             if (VETOR[i] == 0)
             {
-                dfs(i);
+                dfs(i, n);
 
                 if (ciclo == 1)
                 {
@@ -70,49 +64,34 @@ int main()
             printf("NAO\n");
         }
 
-        for (int i = 1; i <= n; i++)
-        {
-            No* atual = LISTA[i];
-
-            while (atual != NULL)
-            {
-                No* temp = atual;
-                atual = atual->proximo;
-                free(temp);
-            }
-        }
-
         t--;
     }
 }
 
-void dfs(int u)
+void dfs(int u, int n)
 {
     VETOR[u] = 1; 
 
-    No* p = LISTA[u];
-
-    while (p != NULL)
+    for (int v = 1; v <= n; v++)
     {
-        int v = p->v;
-
-        if (VETOR[v] == 1)
+        if (MATRIZ[u][v] == 1)
         {
-            ciclo = 1;
-            return;
-        }
-        
-        if (VETOR[v] == 0)
-        {
-            dfs(v);
-
-            if (ciclo == 1)
+            if (VETOR[v] == 1)
             {
+                ciclo = 1;
                 return;
             }
+            
+            if (VETOR[v] == 0)
+            {
+                dfs(v, n);
+
+                if (ciclo == 1)
+                {
+                    return;
+                }
+            }
         }
-        
-        p = p->proximo;
     }
 
     VETOR[u] = 2; 

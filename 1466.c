@@ -1,105 +1,117 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct Node {
-    int value;
-    struct Node *left;
-    struct Node *right;
-} Node;
+typedef struct no
+{
+    int conteudo;
+    struct no *esq;
+    struct no *dir;
+}No;
 
-typedef struct Queue {
-    Node **data;
-    int front;
-    int rear;
-    int size;
-} Queue;
+No* inserir(No *raiz, int conteudo);
+void imprimirNivel(No *raiz);
+void liberarArvore(No *raiz);
 
-// Funções da fila
-Queue* createQueue(int size) {
-    Queue *q = (Queue*)malloc(sizeof(Queue));
-    q->data = (Node**)malloc(size * sizeof(Node*));
-    q->front = 0;
-    q->rear = 0;
-    q->size = size;
-    return q;
-}
+int main()
+{
+    int C = 0;
 
-void enqueue(Queue *q, Node *node) {
-    q->data[q->rear++] = node;
-}
+    if (scanf("%d", &C) == 1)
+    {
+        for (int t = 1; t <= C; t++)
+        {
+            int N;
+            scanf("%d", &N);
 
-Node* dequeue(Queue *q) {
-    return q->data[q->front++];
-}
+            No *raiz = NULL;
 
-int isEmpty(Queue *q) {
-    return q->front == q->rear;
-}
+            for (int i = 0; i < N; i++)
+            {
+                int num;
+                scanf("%d", &num);
+                raiz = inserir(raiz, num);
+            }
 
-void freeQueue(Queue *q) {
-    free(q->data);
-    free(q);
-}
+            printf("Case %d:\n", t);
+            imprimirNivel(raiz);
+            printf("\n"); 
 
-// Funções da árvore
-Node* insert(Node *root, int value) {
-    if (!root) {
-        Node *node = (Node*)malloc(sizeof(Node));
-        node->value = value;
-        node->left = node->right = NULL;
-        return node;
-    }
-    if (value < root->value) root->left = insert(root->left, value);
-    else root->right = insert(root->right, value);
-    return root;
-}
-
-void freeTree(Node *root) {
-    if (!root) return;
-    freeTree(root->left);
-    freeTree(root->right);
-    free(root);
-}
-
-// BFS e impressão
-void bfsPrint(Node *root) {
-    Queue *q = createQueue(500); // máximo 500 níveis
-    enqueue(q, root);
-    int first = 1;
-
-    while (!isEmpty(q)) {
-        Node *current = dequeue(q);
-        if (first) { 
-            printf("%d", current->value); 
-            first = 0;
-        } else {
-            printf(" %d", current->value);
+            liberarArvore(raiz);
         }
-        if (current->left) enqueue(q, current->left);
-        if (current->right) enqueue(q, current->right);
+    }
+}
+
+No* inserir(No *raiz, int y)
+{
+    if (raiz == NULL)
+    {
+        No *novo = malloc(sizeof(No));
+        novo->conteudo = y;
+        novo->esq = novo->dir = NULL;
+
+        return novo;
     }
 
-    freeQueue(q);
+    if (y < raiz->conteudo)
+    {
+        raiz->esq = inserir(raiz->esq, y);
+    }
+    else
+    {
+        raiz->dir = inserir(raiz->dir, y);
+    }
+
+    return raiz;
+}
+
+void imprimirNivel(No *raiz)
+{
+    if (raiz == NULL)
+    {
+        return;
+    }
+
+    No *fila[505];
+    int inicio = 0;
+    int fim = 0;
+
+    fila[fim++] = raiz;
+
+    int primeiro = 1;
+
+    while (inicio < fim)
+    {
+        No *atual = fila[inicio++];
+
+        if (primeiro == 1)
+        {
+            printf("%d", atual->conteudo);
+            primeiro = 0;
+        }
+        else
+        {
+            printf(" %d", atual->conteudo);
+        }
+
+        if (atual->esq != NULL)
+        {
+            fila[fim++] = atual->esq;
+        }
+        if (atual->dir != NULL)
+        {
+            fila[fim++] = atual->dir;
+        }
+    }
     printf("\n");
+    
 }
 
-int main() {
-    int C;
-    scanf("%d", &C);
-    for (int t = 1; t <= C; t++) {
-        int N;
-        scanf("%d", &N);
-        Node *root = NULL;
-        for (int i = 0; i < N; i++) {
-            int x;
-            scanf("%d", &x);
-            root = insert(root, x);
-        }
-
-        printf("Case %d:\n", t);
-        bfsPrint(root);
-        printf("\n"); // linha em branco após cada caso
-        freeTree(root);
+void liberarArvore(No *raiz)
+{
+    if (raiz != NULL)
+    {
+        liberarArvore(raiz->esq);
+        liberarArvore(raiz->dir);
+        free(raiz);
     }
-    return 0;
 }
