@@ -13,7 +13,7 @@ int main()
 
     int matriz[instancia][LINHAS][COLUNAS];
 
-    while (k < instancia) // Leitura dos elementos das matrizes
+    while (k < instancia) 
     {
         for (int i = 0; i < LINHAS; i++)
         {
@@ -28,7 +28,7 @@ int main()
 
     while (m < instancia)
     {
-        int valido = 1; // inicia a verificao
+        int valido = 1; 
 
         for (int i = 0; i < LINHAS; i++)
         {
@@ -41,7 +41,6 @@ int main()
             }
         }
         
-        // verificação das LINHAS
         for (int i = 0; i < LINHAS; i++) 
         {
             for (int j = 0; j < COLUNAS; j++) 
@@ -56,7 +55,6 @@ int main()
             }
         }
 
-        // verificação das COLUNAS
         for (int j = 0; j < COLUNAS; j++) 
         {
             for (int i = 0; i < LINHAS; i++) 
@@ -71,9 +69,9 @@ int main()
             }
         }
 
-        for (int bi = 0; bi < 9; bi += 3) 
+        for (int linha_i = 0; linha_i < 9; linha_i += 3) 
         {       // linha inicial do bloco
-            for (int bj = 0; bj < 9; bj += 3) 
+            for (int coluna_i = 0; coluna_i < 9; coluna_i += 3) 
             {   // coluna inicial do bloco
                 for (int i = 0; i < 3; i++)
                  {
@@ -85,7 +83,7 @@ int main()
                             {
                                 if (!(i == k && j == l)) 
                                 {
-                                    if (matriz[m][bi+i][bj+j] == matriz[m][bi+k][bj+l]) 
+                                    if (matriz[m][linha_i+i][coluna_i+j] == matriz[m][linha_i+k][coluna_i+l]) 
                                     {
                                         valido = 0; 
                                     }
@@ -102,7 +100,7 @@ int main()
     }
 
 
-    while (l < instancia) // exibicao das matrizes
+    while (l < instancia) 
     {
         if (verifica[l] == 0)
         {
@@ -115,16 +113,6 @@ int main()
             printf("SIM\n\n");
         }
         l++;
-
-        /*for (int i = 0; i < LINHAS; i++)
-        {
-            for (int j = 0; j < COLUNAS; j++)
-            {
-                printf("%i", matriz[l][i][j]);
-            }
-            printf("\n");
-        }
-        printf("\n");*/
 
     }
     
