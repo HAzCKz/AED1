@@ -1,53 +1,70 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main() {
-    int N;
-    scanf("%d", &N);
-    for (int t = 0; t < N; t++) {
-        int M, C;
-        scanf("%d %d", &M, &C);
+int main()
+{
+    int n = 0;
 
-        int **table = (int**) malloc(M * sizeof(int*));
-        for (int i = 0; i < M; i++) {
-            table[i] = (int*) malloc(C * sizeof(int));
-            for (int j = 0; j < C; j++) {
-                table[i][j] = 0; 
+    scanf("%d", &n);
+
+    for (int t = 0; t < n; t++)
+    {
+        int m = 0, c = 0;
+
+        scanf("%d", &m);
+        scanf("%d", &c);
+
+        int **tabela = malloc(m * sizeof(int*));
+
+        for (int i = 0; i < m; i++)
+        {
+            tabela[i] = malloc(c * sizeof(int));
+
+            for (int j = 0; j < c; j++)
+            {
+                tabela[i][j] = -1;
             }
         }
 
-        for (int i = 0; i < C; i++) {
-            int key;
-            scanf("%d", &key);
-            int slot = key % M;
+        for (int i = 0; i < c; i++)
+        {
+            int chave;
 
-            for (int j = 0; j < C; j++) {
-                if (table[slot][j] == 0) {
-                    table[slot][j] = key;
+            scanf("%d", &chave);
+
+            int slot = chave % m;
+
+            for (int j = 0; j < c; j++)
+            {
+                if (tabela[slot][j] == -1)
+                {
+                    tabela[slot][j] = chave;
                     break;
                 }
             }
         }
 
-
-        for (int i = 0; i < M; i++) {
+        for (int i = 0; i < m; i++)
+        {
             printf("%d -> ", i);
-            int j = 0;
-            int printed = 0;
-            while (j < C && table[i][j] != 0) {
-                printf("%d -> ", table[i][j]);
-                printed = 1;
-                j++;
+
+            for (int j = 0; j < c; j++)
+            {
+                if (tabela[i][j] != -1)
+                {
+                    printf("%d -> ", tabela[i][j]);
+                }
             }
+
             printf("\\\n");
         }
 
-        if (t != N - 1) printf("\n");
+        if (t != n - 1)
+        {
+            printf("\n");
+        }
 
-
-        for (int i = 0; i < M; i++) free(table[i]);
-        free(table);
+        free(tabela);
     }
 
-    return 0;
 }

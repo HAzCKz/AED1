@@ -1,52 +1,63 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAXM 1005
-#define MAXNOME 55
-
-char nomes[MAXM][MAXNOME];
-double precos[MAXM];
+char nomes[1001][51];
 
 int busca(char *nome, int m);
 
-int main() {
-    int N;
-    scanf("%d", &N);
+int main()
+{
+    double precos[1001];
 
-    while (N--) {
-        int M;
-        scanf("%d", &M);
+    int n = 0;
 
-        for (int i = 0; i < M; i++) {
+    scanf("%d", &n);
+
+    while (n > 0)
+    {
+        int produtos = 0;
+        scanf("%d", &produtos);
+
+        for (int i = 0; i < produtos; i++)
+        {
             scanf("%s %lf", nomes[i], &precos[i]);
         }
 
-        int P;
-        scanf("%d", &P);
+        int n_produtos = 0;
+        scanf("%d", &n_produtos);
 
         double total = 0.0;
 
-        for (int i = 0; i < P; i++) {
-            char nome[MAXNOME];
-            int qtd;
-            scanf("%s %d", nome, &qtd);
+        for (int i = 0; i < n_produtos; i++)
+        {
+            char nome_pedido[51];
+            int qtd = 0;
+            
+            scanf("%s %d", nome_pedido, &qtd);
 
-            int idx = busca(nome, M);
-            if (idx != -1) {
-                total += precos[idx] * qtd;
+            int igual = busca(nome_pedido, produtos);
+
+            if (igual != -1)
+            {
+                total = total + (precos[igual] * qtd);
             }
         }
 
         printf("R$ %.2lf\n", total);
-    }
 
-    return 0;
+        n--;
+    }
 }
 
-int busca(char *nome, int m) {
-    for (int i = 0; i < m; i++) {
+int busca(char *nome, int m)
+{
+    for (int i = 0; i < m; i++)
+    {
         if (strcmp(nome, nomes[i]) == 0)
+        {
             return i;
+        }
     }
+
     return -1;
 }
